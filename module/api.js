@@ -88,4 +88,4 @@ export const addComment = () => {
         alert('Кажется, у Вас сломался интернет');
       }); 
 }
-renderComments();
+

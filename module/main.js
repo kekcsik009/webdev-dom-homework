@@ -3,7 +3,8 @@
 "use strict";
 // Добавляем ДОМ элементы
 import { getComments, comments, btnElement, inputName, inputText, addComment} from "./api.js";
-import { renderComments} from "./render.js";
+import { renderComments, eventErrors, addDate} from "./render.js";
+// import { inputName, inputText} from "./api.js"
 export const cardElements = document.getElementById("commentsId");
 
 const likeElement = document.getElementsByClassName("like-button");
@@ -17,19 +18,6 @@ getComments();
 
 // Вспомогательные функции
 // --Добавляем дату--
-export const addDate = () =>{
-    const date = new Date();
-    let time = {
-        hour: 'numeric',
-        minute: 'numeric'
-    };
-    let year = {
-        year: '2-digit',
-        month: 'numeric',
-        day: 'numeric'
-    }// Выводим дату в нужной для нас форме и русской локализацией
-    return  date.toLocaleString("ru", year) + " " + date.toLocaleString('ru', time);
-}
 // Выделение ошибки
 const btnErrAdd = () => {
     btnElement.classList.add("btn-error");
@@ -37,30 +25,7 @@ const btnErrAdd = () => {
         btnElement.classList.remove("btn-error");
     },500)
 }
-// Крестик
-const getDelCard = (element) => {
-    setTimeout(() => {
-    element.classList.add('del-card');
-    }, 300)
-    element.classList.remove('del');
-    element.classList.add('exet-del');
-}
-// Удаляем комент
-export const commentDel = () => {
-    const btnFormElement = document.querySelectorAll(".del");
-    // console.log(btnFormElement);
-    btnFormElement.forEach((element) => {
-        element.addEventListener('click', (e) => {
-            e.stopPropagation();
-            getDelCard(element);
-            setTimeout(() => {
-                const indexElement = element.dataset.index;
-                comments.splice(indexElement, 1);
-                renderComments()
-            },800)
-        })
-    })
-}
+
 
 
 // Функция добавления лайка
