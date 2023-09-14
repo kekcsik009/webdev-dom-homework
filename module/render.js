@@ -1,15 +1,14 @@
 import { comments, getComments} from "./api.js"
 import { clickEventEditComment } from "./edit.js";
-import { addLike, addDate, cardElements, answerComment, commentDel} from "./main.js";
+import { addLike, answerComment} from "./main.js";
 
-getComments();
 // Рендер
 
 const getLikeClass = (element) => {
     return element ? "like-button -active-like" : "like-button";
 }
 // Добавляем исключения
-const eventErrors = (element) => {
+export const eventErrors = (element) => {
     return element
         .replaceAll("&", "&amp;")
         .replaceAll("<", "&lt;")
@@ -43,11 +42,48 @@ export const renderComments = () => {
       </div>
     </li>`;
     }).join("");
-    cardElements.innerHTML = commentatorsHtml;
+    document.getElementById("commentsId").innerHTML = commentatorsHtml;
     commentDel();
     addLike();
     clickEventEditComment();
     answerComment();
 };
 
+export const addDate = () =>{
+    const date = new Date();
+    let time = {
+        hour: 'numeric',
+        minute: 'numeric'
+    };
+    let year = {
+        year: '2-digit',
+        month: 'numeric',
+        day: 'numeric'
+    }// Выводим дату в нужной для нас форме и русской локализацией
+    return  date.toLocaleString("ru", year) + " " + date.toLocaleString('ru', time);
+}
 
+// Крестик
+const getDelCard = (element) => {
+    setTimeout(() => {
+    element.classList.add('del-card');
+    }, 300)
+    element.classList.remove('del');
+    element.classList.add('exet-del');
+}
+// Удаляем комент
+const commentDel = () => {
+    const btnFormElement = document.querySelectorAll(".del");
+    // console.log(btnFormElement);
+    btnFormElement.forEach((element) => {
+        element.addEventListener('click', (e) => {
+            e.stopPropagation();
+            getDelCard(element);
+            setTimeout(() => {
+                const indexElement = element.dataset.index;
+                comments.splice(indexElement, 1);
+                renderComments()
+            },800)
+        })
+    })
+}

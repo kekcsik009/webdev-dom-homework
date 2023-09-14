@@ -8,8 +8,6 @@ export const btnElement = document.getElementById("btnId");
 export const inputName = document.getElementById("nameTextId");
 export const inputText = document.getElementById("commentTextId");
 
-
-
 // Получаем список коментариев с API
 export const getComments = () => {
     if (loadVars) {
@@ -88,4 +86,4 @@ export const addComment = () => {
         alert('Кажется, у Вас сломался интернет');
       }); 
 }
-renderComments();
+
