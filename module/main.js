@@ -12,7 +12,6 @@ const formBg = document.querySelector('.add-form');
 let textAnswerHtml = "";
 let indexOld = 0;
 
-
 // Получаем список комментариев с API
 getComments();
 
@@ -25,8 +24,6 @@ const btnErrAdd = () => {
         btnElement.classList.remove("btn-error");
     },500)
 }
-
-
 
 // Функция добавления лайка
 export function addLike () {
@@ -117,5 +114,3 @@ export function answerComment() {
 
 btnElement.addEventListener( 'click', () => clickEventAddComment())
 console.log("It works!");
-
-
