@@ -2,8 +2,8 @@
 // ------------------
 "use strict";
 // Добавляем ДОМ элементы
-import { getComments, comments, btnElement, inputName, inputText, addComment  } from "./api.js";
-import { renderComments } from "./render.js";
+import { getComments, comments, btnElement, inputName, inputText, addComment} from "./api.js";
+import { renderComments} from "./render.js";
 export const cardElements = document.getElementById("commentsId");
 
 const likeElement = document.getElementsByClassName("like-button");
