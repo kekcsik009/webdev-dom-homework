@@ -1,6 +1,3 @@
-
-// ------------------
-"use strict";
 // Добавляем ДОМ элементы
 import { getComments, comments, btnElement, inputName, inputText, addComment} from "./api.js";
 import { renderComments, eventErrors, addLike, answerComment } from "./render.js";
