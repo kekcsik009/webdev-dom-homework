@@ -7,7 +7,7 @@ export let comments = [];
 export const btnElement = document.getElementById("btnId");
 export const inputName = document.getElementById("nameTextId");
 export const inputText = document.getElementById("commentTextId");
-
+const cardElements = document.getElementById("commentsId");
 // Получаем список коментариев с API
 export const getComments = () => {
     if (loadVars) {
