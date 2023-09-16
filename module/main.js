@@ -3,11 +3,12 @@
 "use strict";
 // Добавляем ДОМ элементы
 import { getComments, comments, btnElement, inputName, inputText, addComment} from "./api.js";
-import { renderComments, eventErrors, addDate} from "./render.js";
+import { renderComments, eventErrors, addLike, answerComment } from "./render.js";
+import { addDate } from "./func.js";
 // import { inputName, inputText} from "./api.js"
-export const cardElements = document.getElementById("commentsId");
 
-const likeElement = document.getElementsByClassName("like-button");
+
+
 const formBg = document.querySelector('.add-form'); 
 let textAnswerHtml = "";
 let indexOld = 0;
@@ -26,39 +27,7 @@ const btnErrAdd = () => {
 }
 
 // Функция добавления лайка
-export function addLike () {
-    Array.from(likeElement).forEach((element,index) => {
-        element.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const commentator = comments[index];
-            if (commentator.LikeActive === true) {
-                commentator.LikeActive = false;
-                commentator.likes -= 1;
-                renderComments();
-                
-            } else {
-                commentator.LikeActive = true;
-                commentator.likes += 1;
-                renderComments()
-            }
-        })
-    })
-}
-
-export function answerComment() {
-    const oldComments = document.querySelectorAll(".comment");
-    for (let oldComment of oldComments) {
-      oldComment.addEventListener("click", (event) => {
-        event.stopPropagation();
-        const index = oldComment.dataset.index;
-        const comment = comments[index];
-        // eventErrors(comment);
-        inputText.value =` ${comment.text}\n${comment.name} `;
-      });
-    }
-  }
-  
-      
+   
 // Функция добавления нового комментария
  const clickEventAddComment = () => {
     inputText.classList.remove("error");// очистка

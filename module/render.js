@@ -1,7 +1,7 @@
 import { comments, getComments} from "./api.js"
 import { clickEventEditComment } from "./edit.js";
-import { addLike, answerComment} from "./main.js";
-
+import { addDate } from "./func.js";
+const likeElement = document.getElementsByClassName("like-button");
 // Рендер
 
 const getLikeClass = (element) => {
@@ -49,19 +49,6 @@ export const renderComments = () => {
     answerComment();
 };
 
-export const addDate = () =>{
-    const date = new Date();
-    let time = {
-        hour: 'numeric',
-        minute: 'numeric'
-    };
-    let year = {
-        year: '2-digit',
-        month: 'numeric',
-        day: 'numeric'
-    }// Выводим дату в нужной для нас форме и русской локализацией
-    return  date.toLocaleString("ru", year) + " " + date.toLocaleString('ru', time);
-}
 
 // Крестик
 const getDelCard = (element) => {
@@ -87,3 +74,37 @@ const commentDel = () => {
         })
     })
 }
+
+export function addLike () {
+    Array.from(likeElement).forEach((element,index) => {
+        element.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const commentator = comments[index];
+            if (commentator.LikeActive === true) {
+                commentator.LikeActive = false;
+                commentator.likes -= 1;
+                renderComments();
+                
+            } else {
+                commentator.LikeActive = true;
+                commentator.likes += 1;
+                renderComments()
+            }
+        })
+    })
+}
+
+export function answerComment() {
+    const oldComments = document.querySelectorAll(".comment");
+    for (let oldComment of oldComments) {
+      oldComment.addEventListener("click", (event) => {
+        event.stopPropagation();
+        const index = oldComment.dataset.index;
+        const comment = comments[index];
+        // eventErrors(comment);
+        inputText.value =` ${comment.text}\n${comment.name} `;
+      });
+    }
+  }
+  
+   
