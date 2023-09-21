@@ -1,4 +1,4 @@
-import { loginUser,registerUser } from "../api.js";
+import { loginUser,registerUser } from "../module/api.js";
 export let name;
 
 export function renderLoginComponent({ appEl, setToken, getComments }) {
