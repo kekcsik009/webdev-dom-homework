@@ -1,8 +1,10 @@
-import { loginUser, registerUser } from "../api.js";
+import { loginUser, regUser } from "../api.js";
 export let name;
 
-export function renderLoginComponent({ appEl, setToken, getComments }) {
+export function renderLogin({ appEl, setToken, getWrittenComments }) {
   let isLoginMode = true;
+
+  // ---------- Рендерим форму авторизации --------------------------------------
 
   const renderForm = () => {
     const appHtml = `
@@ -11,10 +13,8 @@ export function renderLoginComponent({ appEl, setToken, getComments }) {
       ${
         isLoginMode
           ? ""
-          : `
-            <input type="text" id="name-input" class="form-login" placeholder="Введите имя"/>`
+          : `<input type="text" id="name-input" class="form-login" placeholder="Введите имя"/>`
       }
-          
           <input type="text" id="login-input" class="form-login" placeholder="Введите логин"/>
           <input type="password" id="password-input" class="form-password" placeholder="Введите пароль"/>
       
@@ -24,9 +24,12 @@ export function renderLoginComponent({ appEl, setToken, getComments }) {
 
         <button class="login-button" id="toggle-button">${
           isLoginMode ? "Перейти к регистрации" : "Войти"
-        }</button>`;
+        }</button>
+  `;
 
     appEl.innerHTML = appHtml;
+
+    // ----------- Обрабатываем форму авторизации / регистрации ---------
 
     document.getElementById("login-button").addEventListener("click", () => {
       if (isLoginMode) {
@@ -54,7 +57,7 @@ export function renderLoginComponent({ appEl, setToken, getComments }) {
           .then((user) => {
             setToken(`Bearer ${user.user.token}`);
             name = user.user.name;
-            getComments();
+            getWrittenComments();
           })
           .catch((error) => {
             alert(error.message);
@@ -85,14 +88,14 @@ export function renderLoginComponent({ appEl, setToken, getComments }) {
           return;
         }
 
-        registerUser({
+        regUser({
           login: login.value,
           password: password.value,
           name: name.value,
         })
           .then((user) => {
             setToken(`Bearer ${user.user.token}`);
-            getComments();
+            getWrittenComments();
           })
           .catch((error) => {
             alert(error.message);

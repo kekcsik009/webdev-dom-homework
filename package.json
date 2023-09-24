@@ -3,8 +3,10 @@
   "version": "1.0.0",
   "description": "https://glebkaf.github.io/webdev-dom-homework/",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "dev": "webpack --mode development --watch"
+    "dev": "webpack --mode development --watch",
+    "lint:js": "eslint ./**/*.js"
   },
   "keywords": [],
   "author": "",
@@ -15,6 +17,10 @@
   },
   "devDependencies": {
     "axios": "^1.5.0",
+    "date-fns": "^2.30.0",
+    "eslint": "^8.50.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.0",
     "prettier": "^3.0.3",
     "webpack": "^5.88.2",
     "webpack-cli": "^5.1.4"
