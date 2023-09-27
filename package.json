@@ -3,10 +3,9 @@
   "version": "1.0.0",
   "description": "https://glebkaf.github.io/webdev-dom-homework/",
   "main": "index.js",
-  "type": "module",
   "scripts": {
     "dev": "webpack --mode development --watch",
-    "lint:js": "eslint ./**/*.js"
+    "lint:js": "eslint ./*.js"
   },
   "keywords": [],
   "author": "",
