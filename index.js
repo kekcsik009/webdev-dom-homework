@@ -1,4 +1,4 @@
-import { formatDateRu, formatDateUs } from "./lib/formatDate/formatDate.js";
+// import { formatDateRu, formatDateUs } from "./lib/formatDate/formatDate.js";
 import { format } from "date-fns";
 
 // ---------- Кучкуем переменные ----------------------------------------------
@@ -11,8 +11,8 @@ const country = "ru";
 
 // --------- Импортируем функции и переменные ---------------------------------
 
-import { postComments, getComments } from "./api.js";
-import { renderLogin, name } from "./components/login-component.js";
+import { postComments, getComments } from "./components/api.js";
+import { renderLogin, name } from "./components/login-components.js";
 
 // ---------- Рендерим имеющиеся комментарии ----------------------------------
 

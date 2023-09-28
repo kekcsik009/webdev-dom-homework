@@ -3,9 +3,11 @@
   "version": "1.0.0",
   "description": "https://glebkaf.github.io/webdev-dom-homework/",
   "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
   "scripts": {
-    "dev": "webpack --mode development --watch",
-    "lint:js": "eslint ./*.js"
+    "dev": "webpack --mode development --watch"
   },
   "keywords": [],
   "author": "",
