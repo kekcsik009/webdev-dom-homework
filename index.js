@@ -1,18 +1,17 @@
-import { formatDateRu, formatDateUs } from "./lib/formatDate/formatDate.js";
-import { format } from "date-fns";
-
+// import { formatDateRu, formatDateUs } from "./lib/formatDate/formatDate.js";
+import { format } from 'date-fns';
 // ---------- Кучкуем переменные ----------------------------------------------
 
 let token = null;
 let comments = [];
 let loadingComments = true;
 let isLoadingAdd = false;
-const country = "ru";
+const country = 'ru';
 
 // --------- Импортируем функции и переменные ---------------------------------
 
-import { postComments, getComments } from "./api.js";
-import { renderLogin, name } from "./components/login-component.js";
+import { postComments, getComments } from './components/api.js';
+import { renderLogin, name } from './components/login-components.js';
 
 // ---------- Рендерим имеющиеся комментарии ----------------------------------
 
@@ -42,20 +41,20 @@ const getWrittenComments = async () => {
 // ---------- Рендеринг формы -------------------------------------------------
 
 const renderForm = (isLoading) => {
-  const formWindow = document.querySelector(".add-form");
-  const loaderText = document.getElementById("loader");
+  const formWindow = document.querySelector('.add-form');
+  const loaderText = document.getElementById('loader');
 
   if (isLoading) {
-    loaderText.classList.remove("hidden");
-    formWindow.classList.add("hidden");
+    loaderText.classList.remove('hidden');
+    formWindow.classList.add('hidden');
   } else {
-    loaderText.classList.add("hidden");
-    formWindow.classList.remove("hidden");
+    loaderText.classList.add('hidden');
+    formWindow.classList.remove('hidden');
   }
 };
 
 const renderApp = (loadingComments) => {
-  const appEl = document.getElementById("app");
+  const appEl = document.getElementById('app');
 
   const commentsHTML = comments
     .map((comment, index) => {
@@ -63,13 +62,13 @@ const renderApp = (loadingComments) => {
       return `<li class="comment" data-index='${index}'>
             <div class="comment-header">
               <div>${comment.name}</div>
-              <div>${format(date, "yyyy-dd-MM hh:mm:ss")}</div>
+              <div>${format(date, 'yyyy-dd-MM hh:mm:ss')}</div>
             </div>
             <div class="comment-body">
               <div class="comment-text">
                 ${comment.text
-                  .replaceAll("QUOTE_BEGIN", "<div class='quote'>")
-                  .replaceAll("QUOTE_END", "</div>")}
+                  .replaceAll('QUOTE_BEGIN', "<div class='quote'>")
+                  .replaceAll('QUOTE_END', '</div>')}
               </div>
             </div>
             <div class="comment-footer">
@@ -77,21 +76,21 @@ const renderApp = (loadingComments) => {
               <div class="likes">
                 <span class="likes-counter">${comment.likes}</span>
                 <button data-index='${index}' class="like-button ${
-                  comment.isLiked ? "-active-like" : ""
-                } ${comment.isLikeLoading ? "-loading-like" : ""}"></button>
+                  comment.isLiked ? '-active-like' : ''
+                } ${comment.isLikeLoading ? '-loading-like' : ''}"></button>
               </div>
             </div>
           </li>`;
     })
-    .join("");
+    .join('');
 
   if (!token) {
     const appHtml = `
                     <ul class="comments">
                             ${
                               loadingComments
-                                ? "<p>Пожалуйста подождите, комментарии загружаются...</p>"
-                                : ""
+                                ? '<p>Пожалуйста подождите, комментарии загружаются...</p>'
+                                : ''
                             }
                             ${commentsHTML}
                         </ul>
@@ -99,7 +98,7 @@ const renderApp = (loadingComments) => {
                     `;
 
     appEl.innerHTML = appHtml;
-    document.querySelector(".login-button").addEventListener("click", () => {
+    document.querySelector('.login-button').addEventListener('click', () => {
       renderLogin({
         appEl,
         setToken: (newToken) => {
@@ -116,8 +115,8 @@ const renderApp = (loadingComments) => {
                 <ul class="comments">
                         ${
                           loadingComments
-                            ? "<p>Пожалуйста подождите, комментарии загружаются...</p>"
-                            : ""
+                            ? '<p>Пожалуйста подождите, комментарии загружаются...</p>'
+                            : ''
                         }
                         ${commentsHTML}
                     </ul>
@@ -147,9 +146,9 @@ const renderApp = (loadingComments) => {
 
   appEl.innerHTML = appHtml;
 
-  const buttonComments = document.querySelector(".add-form-button");
-  const nameInputElement = document.querySelector(".add-form-name");
-  const textInputElement = document.querySelector(".add-form-text");
+  const buttonComments = document.querySelector('.add-form-button');
+  const nameInputElement = document.querySelector('.add-form-name');
+  const textInputElement = document.querySelector('.add-form-text');
   buttonComments.disabled = true;
 
   nameInputElement.value = name;
@@ -157,24 +156,24 @@ const renderApp = (loadingComments) => {
 
   // ---------- Включение некликабельности кнопки при отсутствии имени ----------
 
-  textInputElement.addEventListener("input", () => {
+  textInputElement.addEventListener('input', () => {
     buttonComments.disabled = false;
   });
 
   // ---------- Обработчик события добавления комментария -----------------------
 
-  buttonComments.addEventListener("click", () => {
-    textInputElement.classList.remove("error");
+  buttonComments.addEventListener('click', () => {
+    textInputElement.classList.remove('error');
 
     isLoadingAdd = true;
     renderForm(isLoadingAdd);
 
     postComments({
       text: textInputElement.value
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;"),
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;'),
       token,
     })
       .then(() => {
@@ -183,7 +182,7 @@ const renderApp = (loadingComments) => {
       .then(() => {
         isLoadingAdd = false;
         renderForm(isLoadingAdd);
-        textInputElement.value = "";
+        textInputElement.value = '';
       })
       .catch((error) => {
         isLoadingAdd = false;
@@ -195,15 +194,15 @@ const renderApp = (loadingComments) => {
   // ---------- Встраиваем слушателя событий на ввод текста ---------------------
 
   buttonComments.disabled = true;
-  buttonComments.classList.add("empty");
-  textInputElement.addEventListener("input", handleInput);
+  buttonComments.classList.add('empty');
+  textInputElement.addEventListener('input', handleInput);
   function handleInput() {
-    if (textInputElement.value.trim() !== "") {
+    if (textInputElement.value.trim() !== '') {
       buttonComments.disabled = false;
-      buttonComments.classList.remove("empty");
+      buttonComments.classList.remove('empty');
     } else {
       buttonComments.disabled = true;
-      buttonComments.classList.add("empty");
+      buttonComments.classList.add('empty');
     }
   }
   // ---------- Конец слушателя событий -----------------------------------------
@@ -218,12 +217,12 @@ getWrittenComments();
 // ---------- Ответ на комментрарий --------------------------------------------
 
 const answerComments = (comments) => {
-  const oldComments = document.querySelectorAll(".comment");
+  const oldComments = document.querySelectorAll('.comment');
 
-  const textInputElement = document.querySelector(".add-form-text");
+  const textInputElement = document.querySelector('.add-form-text');
 
   oldComments.forEach((oldElement) => {
-    oldElement.addEventListener("click", () => {
+    oldElement.addEventListener('click', () => {
       const index = oldElement.dataset.index;
 
       textInputElement.value = `QUOTE_BEGIN ${comments[index].text}\n${comments[index].name} QUOTE_END`;
@@ -245,20 +244,20 @@ function delay(interval = 300) {
 
 function formatDate(date) {
   const year = date.getFullYear().toString().slice(-2);
-  const month = ("0" + (date.getMonth() + 1)).slice(-2);
-  const day = ("0" + date.getDate()).slice(-2);
-  const hours = ("0" + date.getHours()).slice(-2);
-  const minutes = ("0" + date.getMinutes()).slice(-2);
+  const month = ('0' + (date.getMonth() + 1)).slice(-2);
+  const day = ('0' + date.getDate()).slice(-2);
+  const hours = ('0' + date.getHours()).slice(-2);
+  const minutes = ('0' + date.getMinutes()).slice(-2);
   return `${day}.${month}.${year} ${hours}:${minutes}`;
 }
 
 // ---------- Это счетчик лайков ----------------------------------------------
 
 function counterLikes() {
-  const likesButtonElements = document.querySelectorAll(".like-button");
+  const likesButtonElements = document.querySelectorAll('.like-button');
 
   likesButtonElements.forEach((likesButtonElement) => {
-    likesButtonElement.addEventListener("click", (event) => {
+    likesButtonElement.addEventListener('click', (event) => {
       event.stopPropagation();
       const index = likesButtonElement.dataset.index;
       const comment = comments[index];
@@ -267,7 +266,7 @@ function counterLikes() {
       renderApp();
       delay(1000).then(() => {
         comment.isLiked = !comment.isLiked;
-        likesButtonElement.classList.toggle("-active-like");
+        likesButtonElement.classList.toggle('-active-like');
         comment.likes = comment.isLiked ? comment.likes++ : comment.likes--;
         comment.isLikeLoading = false;
         renderApp();
